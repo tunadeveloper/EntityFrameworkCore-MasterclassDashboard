@@ -7,4 +7,9 @@
     <RootNamespace>EntityFrameworkCore_MasterclassDashboard</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\inapp-1.0.0\.DS_Store" />
+    <None Include="wwwroot\inapp-1.0.0\.github\workflows\action.yml" />
+  </ItemGroup>
+
 </Project>
