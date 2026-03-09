@@ -1,9 +1,11 @@
 ﻿using EntityFrameworkCore_MasterclassDashboard.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore_MasterclassDashboard.Context
 {
-    public class MasterclassContext : DbContext
+    public class MasterclassContext : IdentityDbContext<AppUser, IdentityRole<int>, int>
     {
         public MasterclassContext(DbContextOptions<MasterclassContext> options) : base(options) { }
 
