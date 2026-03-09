@@ -1,0 +1,76 @@
+<div class="row g-3 mb-3">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center bg-transparent px-4 py-3">
+                <h3 class="h5 mb-0">Satış ve Alış</h3>
+                <div>
+                    <select class="form-select form-select-sm">
+                        <option selected>Bu Yıl</option>
+                        <option>Bu Ay</option>
+                        <option>Bu Hafta</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <div id="salesPurchaseChart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center bg-transparent px-4 py-3">
+                <h3 class="h5 mb-0">Genel Bilgiler</h3>
+                <div>
+                    <select class="form-select form-select-sm">
+                        <option selected>Son 6 Ay</option>
+                        <option>Bu Ay</option>
+                        <option>Bu Hafta</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <h3 class="h6">Müşteri Özeti</h3>
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div id="customerChart">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-6 border-end">
+                                <div class="text-center ">
+                                    <h2 class="mb-1">5.5K</h2>
+                                    <p class="text-success mb-2">İlk Kez</p>
+                                    <span class="badge bg-success"><i class="ti ti-arrow-up-left me-1"></i>25%</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <h2 class="mb-1">3.5K</h2>
+                                    <p class="text-warning mb-2">Tekrar</p>
+                                    <span class="badge bg-success badge-xs d-inline-flex align-items-center">
+                                        <i class="ti ti-arrow-up-left me-1"></i>21%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center border-top mt-4 pt-4">
+                    <div class="col-4 border-end">
+                        <h3 class="fw-bold mb-2">6987</h3>
+                        <small class="text-secondary">Tedarikçiler</small>
+                    </div>
+                    <div class="col-4 border-end">
+                        <h3 class="fw-bold mb-2">4896</h3>
+                        <small class="text-secondary">Müşteriler</small>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="fw-bold mb-2">487</h3>
+                        <small class="text-secondary">Siparişler</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
