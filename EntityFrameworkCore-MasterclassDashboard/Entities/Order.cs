@@ -9,7 +9,6 @@ namespace EntityFrameworkCore_MasterclassDashboard.Entities
         public int SaleCount { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
-        public DateTime SaleDate { get; set; }
 
         public Product Product { get; set; }
         public Customer Customer { get; set; }
