@@ -10,5 +10,8 @@ namespace EntityFrameworkCore_MasterclassDashboard.Entities
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime SaleDate { get; set; }
+
+        public Product Product { get; set; }
+        public Customer Customer { get; set; }
     }
 }

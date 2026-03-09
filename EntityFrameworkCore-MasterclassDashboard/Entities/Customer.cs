@@ -10,5 +10,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Entities
         public string CustomeCity { get; set; }
         public string? CustomeDistrict { get; set; }
         public decimal CustomeBalance { get; set; }
+
+        public List<Order> Orders { get; set; }
     }
 }
