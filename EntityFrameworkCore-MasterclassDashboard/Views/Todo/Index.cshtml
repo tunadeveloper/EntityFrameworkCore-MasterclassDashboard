@@ -1,0 +1,288 @@
+@using EntityFrameworkCore_MasterclassDashboard.Entities
+@{
+    ViewData["Title"] = "Yapılacaklar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var todoList = ViewBag.todoList as List<Todo>;
+}
+@model Todo
+<main id="content" class="content py-10">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="mb-6">
+                    <h1 class="fs-3 mb-1">Yapılacaklar</h1>
+                    <p class="text-muted mb-0">Görevlerinizi yönetin ve önceliklere göre takip edin.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <div class="card p-4 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-2">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="icon-shape icon-lg bg-primary text-white rounded-2 d-inline-flex align-items-center justify-content-center">
+                                <i class="ti ti-clock-hour-4 fs-2"></i>
+                            </div>
+                            <div>
+                                <h2 class="fs-6 text-muted mb-1">Hedef tarihe kalan süre</h2>
+                                <p class="mb-0 small text-primary">31 Aralık 2026, 23:59</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-4 gap-lg-5 flex-wrap">
+                            <div class="text-center">
+                                <span class="d-block display-6 fw-bold text-primary" id="countdown-days">00</span>
+                                <small class="text-muted">Gün</small>
+                            </div>
+                            <div class="text-center">
+                                <span class="d-block display-6 fw-bold text-primary" id="countdown-hours">00</span>
+                                <small class="text-muted">Saat</small>
+                            </div>
+                            <div class="text-center">
+                                <span class="d-block display-6 fw-bold text-primary" id="countdown-minutes">00</span>
+                                <small class="text-muted">Dakika</small>
+                            </div>
+                            <div class="text-center">
+                                <span class="d-block display-6 fw-bold text-primary" id="countdown-seconds">00</span>
+                                <small class="text-muted">Saniye</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-lg-12">
+                <div class="card h-100">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center px-4 py-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="icon-shape icon-sm bg-success text-white rounded-2 d-inline-flex align-items-center justify-content-center">
+                                <i class="ti ti-list-check"></i>
+                            </span>
+                            <div>
+                                <h4 class="mb-0 h5">Yapılacak Görevler</h4>
+                                <small class="text-muted">Tüm görevlerinizin listesi</small>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#todoModal">
+                            <i class="ti ti-plus me-1"></i> Yeni Görev
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in todoList)
+                            {
+                                var priorityColor = item.Priority switch
+                                {
+                                            "Yüksek" => "danger",
+                                            "Orta" => "warning",
+                                            "Düşük" => "success",
+                                    _ => "secondary"
+                                };
+
+                                <li class="list-group-item d-flex align-items-center gap-3 px-4 py-3">
+                                    <div class="form-check mb-0">
+                                        <input class="form-check-input" type="checkbox" id="todo-@item.Id" @(item.IsCompleted ? "checked" : "")>
+                                        <label class="form-check-label visually-hidden" for="todo-@item.Id">Tamamla</label>
+                                    </div>
+                                    <div class="flex-grow-1 @(item.IsCompleted ? "text-decoration-line-through text-muted" : "")">
+                                        <p class="mb-1 fw-semibold">@item.Title</p>
+                                        <small class="text-muted">@item.Description</small>
+                                    </div>
+                                    <span class="badge bg-@priorityColor-subtle text-@priorityColor border border-@priorityColor">
+                                        @item.Priority
+                                    </span>
+                                    <span class="badge bg-light text-dark border">
+                                        @item.Category
+                                    </span>
+                                    <small class="text-muted">
+                                        @(item.DueDate.HasValue? item.DueDate.Value.ToString("dd MMM yyyy") : "Tarih Yok")
+                                    </small>
+                                    <a href="/Todo/DeleteTask/@item.Id" class="btn btn-sm btn-outline-danger rounded-2" title="Sil" onclick="return confirm('Bu görevi silmek istediğinize emin misiniz?');">
+                                        <i class="ti ti-trash"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-4 col-12">
+                <div class="card h-100 p-4 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded-2">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="icon-shape icon-md bg-danger text-white rounded-2">
+                            <i class="ti ti-arrow-up fs-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-0 fw-bold">Yüksek Öncelik</h3>
+                            <small class="text-danger">Acil tamamlanması gerekenler</small>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-0">
+                        @foreach (var item in (List<Todo>)ViewBag.highPriorityTask)
+                            {
+                                <li class="list-group-item bg-transparent px-0 py-2 d-flex align-items-center gap-2">
+                                    <i class="ti ti-circle-filled text-danger small"></i>
+                                    <span>@item.Title</span>
+                                </li>
+                            }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card h-100 p-4 bg-warning bg-opacity-10 border border-warning border-opacity-25 rounded-2">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="icon-shape icon-md bg-warning text-white rounded-2">
+                            <i class="ti ti-minus fs-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-0 fw-bold">Orta Öncelik</h3>
+                            <small class="text-warning">Bu hafta yapılacaklar</small>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-0">
+                        @foreach (var item in (List<Todo>)ViewBag.medPriorityTask)
+                        {
+                            <li class="list-group-item bg-transparent px-0 py-2 d-flex align-items-center gap-2">
+                                <i class="ti ti-circle-filled text-warning small"></i>
+                                <span>@item.Title</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card h-100 p-4 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-2">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="icon-shape icon-md bg-success text-white rounded-2">
+                            <i class="ti ti-arrow-down fs-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="h5 mb-0 fw-bold">Düşük Öncelik</h3>
+                            <small class="text-success">İleride yapılacaklar</small>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-0">
+                        @foreach (var item in (List<Todo>)ViewBag.lowPriorityTask)
+                        {
+                            <li class="list-group-item bg-transparent px-0 py-2 d-flex align-items-center gap-2">
+                                <i class="ti ti-circle-filled text-success small"></i>
+                                <span>@item.Title</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal fade" id="todoModal" tabindex="-1" aria-labelledby="todoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-3 shadow">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="icon-shape icon-sm bg-primary text-white rounded-2 d-inline-flex align-items-center justify-content-center">
+                        <i class="ti ti-plus"></i>
+                    </span>
+                    <h5 class="modal-title fw-bold" id="todoModalLabel">Yeni Görev Ekle</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 pt-2">
+                <form id="todoForm" method="post" action="@Url.Action("CreateTask", "Todo")">
+                    <div class="mb-3">
+                        <label for="todoTitle" class="form-label fw-semibold">Başlık <span class="text-danger">*</span></label>
+                        <input type="text" name="Title" class="form-control rounded-2" id="todoTitle" placeholder="Görev başlığını girin" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="todoDescription" class="form-label fw-semibold">Açıklama</label>
+                        <textarea class="form-control rounded-2" name="Description" id="todoDescription" rows="3" placeholder="İsteğe bağlı açıklama"></textarea>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="todoPriority" class="form-label fw-semibold">Öncelik</label>
+                            <select class="form-select rounded-2" id="todoPriority" name="Priority">
+                                <option value="Yüksek">Yüksek</option>
+                                <option value="Orta" selected>Orta</option>
+                                <option value="Düşük">Düşük</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="todoDueDate" class="form-label fw-semibold">Bitiş Tarihi</label>
+                            <input type="date" class="form-control rounded-2" name="DueDate" id="todoDueDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="todoDueTime" class="form-label fw-semibold">Bitiş Saati</label>
+                            <input type="time" class="form-control rounded-2" name="DueTime" id="todoDueTime" value="23:59">
+                        </div>
+                    </div>
+                    <div class="mb-0 mt-3">
+                        <label for="todoCategory" class="form-label fw-semibold">Kategori</label>
+                        <select class="form-select rounded-2" id="todoCategory" name="Category">
+                            <option value="">Seçiniz</option>
+                            <option value="İş">İş</option>
+                            <option value="Toplantı">Toplantı</option>
+                            <option value="Müşteri">Müşteri</option>
+                            <option value="Genel">Genel</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4 pt-0 d-flex gap-2 justify-content-end">
+                <button type="button" class="btn btn-outline-secondary rounded-2" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" form="todoForm" class="btn btn-primary rounded-2">
+                    <i class="ti ti-check me-1"></i> Görev Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var todoForm = document.getElementById('todoForm');
+        var todoDueDate = document.getElementById('todoDueDate');
+        var todoDueTime = document.getElementById('todoDueTime');
+        if (todoForm && todoDueDate && todoDueTime) {
+            todoForm.addEventListener('submit', function () {
+                var dateVal = todoDueDate.value;
+                var timeVal = todoDueTime.value || '23:59';
+                if (dateVal && timeVal) {
+                    var hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'DueDate';
+                    hidden.value = dateVal + 'T' + timeVal + ':00';
+                    todoDueDate.removeAttribute('name');
+                    todoDueTime.removeAttribute('name');
+                    todoForm.appendChild(hidden);
+                }
+            });
+        }
+        function updateCountdown() {
+            var target = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59);
+            var now = new Date();
+            var diff = target - now;
+            if (diff <= 0) {
+                document.getElementById('countdown-days').textContent = '00';
+                document.getElementById('countdown-hours').textContent = '00';
+                document.getElementById('countdown-minutes').textContent = '00';
+                document.getElementById('countdown-seconds').textContent = '00';
+                return;
+            }
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    })();
+</script>
