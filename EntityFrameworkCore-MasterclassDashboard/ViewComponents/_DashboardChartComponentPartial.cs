@@ -17,13 +17,13 @@ namespace EntityFrameworkCore_MasterclassDashboard.ViewComponents
             ViewBag.ChartSalesData = Enumerable.Range(1, 12)
                 .Select(x => (double)ordersThisYear.Where(y => y.CreatedDate.Month == x).Sum(z => z.TotalPrice))
                 .ToList();
-            ViewBag.ChartPurchaseData = Enumerable.Range(1, 12).Select(_ => 0.0).ToList();
+            ViewBag.ChartPurchaseData = Enumerable.Range(1, 12).Select(x => 0.0).ToList();
 
             ViewBag.totalCustomersCount = _context.Customers.Count();
             ViewBag.totalOrdersCount = _context.Orders.Count();
             ViewBag.totalProductsCount = _context.Products.Count();
-            ViewBag.minCustomerBalance = _context.Customers.Min(x => x.CustomeBalance);
-            ViewBag.maxCustomerBalance = _context.Customers.Max(x => x.CustomeBalance);
+            ViewBag.minCustomerBalance = _context.Customers.Min(x => x.CustomeBalance).ToString("N2");
+            ViewBag.maxCustomerBalance = _context.Customers.Max(x => x.CustomeBalance).ToString("N2");
 
             return View();
         }
