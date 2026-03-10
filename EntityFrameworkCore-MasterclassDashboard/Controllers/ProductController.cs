@@ -17,15 +17,19 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, string searchString)
         {
-            int pageNumber = page ?? 1;
-            var values = _context.Products.Include(x=>x.Category).OrderBy(x=>x.Id).ToPagedList(pageNumber, 10);
+            var products = _context.Products.Include(x => x.Category).AsQueryable();
+            if (!string.IsNullOrEmpty(searchString))
+                products = products.Where(x => x.ProductName.Contains(searchString));
+            var model = products.OrderBy(x => x.Id).ToPagedList(page ?? 1, 10);
 
             ViewBag.totalProduct = _context.Products.Count().ToString("N0");
             ViewBag.totalStock = _context.Products.Sum(x=>x.ProductStock).ToString("N0");
             ViewBag.avgPrice = _context.Products.Average(x => x.ProductPrice).ToString("N2");
-            return View(values);
+            ViewBag.Search = searchString;
+
+            return View(model);
         }
 
         public IActionResult CreateProduct()
