@@ -24,7 +24,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.maxOrderBalance = _context.Orders.Max(x => x.TotalPrice).ToString("N2");
             ViewBag.avgUnitPrice = _context.Orders.Average(x => x.UnitPrice).ToString("N2");
 
-            var values = _context.Orders.OrderByDescending(x=>x.CreatedDate).Take(7).ToList();
+            var values = _context.Orders.OrderByDescending(x => x.CreatedDate).Take(7).ToList();
             return View(values);
         }
 
@@ -39,12 +39,38 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.highProductPrice = _context.Products.Max(x => x.ProductPrice).ToString("N2");
             ViewBag.lowProductStock = _context.Products.Min(y => y.ProductStock);
 
-            ViewBag.categoryDistribution = _context.Categories.Select(x=> new
+            ViewBag.categoryDistribution = _context.Categories.Select(x => new
             {
                 Name = x.CategoryName,
                 Count = x.Products.Count()
-            }).Take(5).OrderByDescending(x=>x.Count).ToDictionary(x => x.Name, x => x.Count);
-            ViewBag.latestOrderProduct = _context.Orders.Include(x => x.Product).ThenInclude(z=>z.Category).OrderByDescending(y => y.CreatedDate).Take(6).ToList();
+            }).Take(5).OrderByDescending(x => x.Count).ToDictionary(x => x.Name, x => x.Count);
+            ViewBag.latestOrderProduct = _context.Orders.Include(x => x.Product).ThenInclude(z => z.Category).OrderByDescending(y => y.CreatedDate).Take(6).ToList();
+            return View();
+        }
+
+        public IActionResult CustomerStatistics()
+        {
+            ViewBag.totalCustomers = _context.Customers.Count();
+            ViewBag.totalBalance = _context.Customers.Sum(x => x.CustomeBalance).ToString("N2");
+            ViewBag.avgBalance = _context.Customers.Average(x => x.CustomeBalance).ToString("N2");
+            ViewBag.highBalance = _context.Customers.Max(x => x.CustomeBalance).ToString("N2");
+
+            ViewBag.lowBalance = _context.Customers.Min(x => x.CustomeBalance).ToString("N2");
+
+            ViewBag.cityBalanceStats = _context.Customers
+                .GroupBy(x => x.CustomeCity)
+                .Select(y => new
+                {
+                    CityName = y.Key,
+                    TotalCityBalance = y.Sum(x => x.CustomeBalance),
+                    UserCount = y.Count()
+                })
+            .OrderByDescending(y => y.TotalCityBalance)
+            .Take(6)
+            .ToDictionary(x => x.CityName, x => x.UserCount);
+
+            ViewBag.highBalanceCustomer = _context.Customers.OrderByDescending(x => x.CustomeBalance).Take(6).ToList();
+
             return View();
         }
     }
