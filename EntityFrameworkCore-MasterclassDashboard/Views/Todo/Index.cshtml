@@ -83,8 +83,19 @@
 
                                 <li class="list-group-item d-flex align-items-center gap-3 px-4 py-3">
                                     <div class="form-check mb-0">
-                                        <input class="form-check-input" type="checkbox" id="todo-@item.Id" @(item.IsCompleted ? "checked" : "")>
-                                        <label class="form-check-label visually-hidden" for="todo-@item.Id">Tamamla</label>
+                                        @if (item.IsCompleted)
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="todo-@item.Id" checked disabled>
+                                            <label class="form-check-label visually-hidden" for="todo-@item.Id">Tamamlandı</label>
+                                        }
+                                        else
+                                        {
+                                            <form method="get" action="@Url.Action("ComplatedTask", "Todo")" class="d-inline">
+                                                <input type="hidden" name="id" value="@item.Id">
+                                                <input class="form-check-input" type="checkbox" id="todo-@item.Id" onchange="this.form.submit()">
+                                                <label class="form-check-label visually-hidden" for="todo-@item.Id">Tamamla</label>
+                                            </form>
+                                        }
                                     </div>
                                     <div class="flex-grow-1 @(item.IsCompleted ? "text-decoration-line-through text-muted" : "")">
                                         <p class="mb-1 fw-semibold">@item.Title</p>

@@ -16,9 +16,9 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
         public IActionResult Index()
         {
             ViewBag.todoList = _context.Todos.ToList();
-            ViewBag.highPriorityTask = _context.Todos.Where(x => x.Priority == "Yüksek").ToList();
-            ViewBag.medPriorityTask = _context.Todos.Where(x => x.Priority == "Orta").ToList();
-            ViewBag.lowPriorityTask = _context.Todos.Where(x => x.Priority == "Düşük").ToList();
+            ViewBag.highPriorityTask = _context.Todos.Where(x => x.Priority == "Yüksek" && x.IsCompleted == false).ToList();
+            ViewBag.medPriorityTask = _context.Todos.Where(x => x.Priority == "Orta" && x.IsCompleted == false).ToList();
+            ViewBag.lowPriorityTask = _context.Todos.Where(x => x.Priority == "Düşük" && x.IsCompleted == false).ToList();
             return View();
         }
 
@@ -30,11 +30,19 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
         public IActionResult DeleteTask(int id)
         {
             var todo = _context.Todos.Find(id);
             _context.Todos.Remove(todo);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ComplatedTask(int id)
+        {
+            var todo = _context.Todos.Find(id);
+            todo.IsCompleted = true;
+            _context.Todos.Update(todo);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
