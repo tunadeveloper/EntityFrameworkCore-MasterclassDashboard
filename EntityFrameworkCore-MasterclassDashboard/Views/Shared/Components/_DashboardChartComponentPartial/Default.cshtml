@@ -1,3 +1,10 @@
+@{
+    var salesData = ViewBag.ChartSalesData as List<double>;
+    var purchaseData = ViewBag.ChartPurchaseData as List<double>;
+    var categories = new[] { "Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara" };
+    var generalLabels = new[] { "Müşteriler", "Siparişler", "Ürünler" };
+    var generalSeries = new[] { (int)ViewBag.totalCustomersCount, (int)ViewBag.totalOrdersCount, (int)ViewBag.totalProductsCount };
+}
 <div class="row g-3 mb-3">
     <div class="col-12 col-lg-6">
         <div class="card">
@@ -12,7 +19,7 @@
                 </div>
             </div>
             <div class="card-body p-4">
-                <div id="salesPurchaseChart"></div>
+                <div id="dashboardSalesPurchaseChart"></div>
             </div>
         </div>
     </div>
@@ -32,22 +39,21 @@
                 <h3 class="h6">Müşteri Özeti</h3>
                 <div class="row align-items-center">
                     <div class="col-sm-6">
-                        <div id="customerChart">
-                        </div>
+                        <div id="dashboardGeneralChart"></div>
                     </div>
                     <div class="col-sm-6">
                         <div class="row">
                             <div class="col-6 border-end">
                                 <div class="text-center ">
-                                    <h2 class="mb-1">5.5K</h2>
-                                    <p class="text-success mb-2">İlk Kez</p>
+                                    <h2 class="mb-1">@ViewBag.minCustomerBalance</h2>
+                                    <p class="text-success mb-2">En düşük müşteri bakiyesi</p>
                                     <span class="badge bg-success"><i class="ti ti-arrow-up-left me-1"></i>25%</span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="text-center">
-                                    <h2 class="mb-1">3.5K</h2>
-                                    <p class="text-warning mb-2">Tekrar</p>
+                                    <h2 class="mb-1">@ViewBag.maxCustomerBalance</h2>
+                                    <p class="text-warning mb-2">En yüksek müşteri bakiyesi</p>
                                     <span class="badge bg-success badge-xs d-inline-flex align-items-center">
                                         <i class="ti ti-arrow-up-left me-1"></i>21%
                                     </span>
@@ -58,19 +64,69 @@
                 </div>
                 <div class="row text-center border-top mt-4 pt-4">
                     <div class="col-4 border-end">
-                        <h3 class="fw-bold mb-2">6987</h3>
-                        <small class="text-secondary">Tedarikçiler</small>
-                    </div>
-                    <div class="col-4 border-end">
-                        <h3 class="fw-bold mb-2">4896</h3>
+                        <h3 class="fw-bold mb-2">@ViewBag.totalCustomersCount</h3>
                         <small class="text-secondary">Müşteriler</small>
                     </div>
-                    <div class="col-4">
-                        <h3 class="fw-bold mb-2">487</h3>
+                    <div class="col-4 border-end">
+                        <h3 class="fw-bold mb-2">@ViewBag.totalOrdersCount</h3>
                         <small class="text-secondary">Siparişler</small>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="fw-bold mb-2">@ViewBag.totalProductsCount</h3>
+                        <small class="text-secondary">Ürünler</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    (function () {
+        var categories = @Html.Raw(Json.Serialize(categories));
+        var salesData = @Html.Raw(Json.Serialize(salesData));
+        var purchaseData = @Html.Raw(Json.Serialize(purchaseData));
+        var generalSeries = @Html.Raw(Json.Serialize(generalSeries));
+        var generalLabels = @Html.Raw(Json.Serialize(generalLabels));
+
+        function renderCharts() {
+            if (typeof ApexCharts === 'undefined') return;
+            var elSales = document.getElementById('dashboardSalesPurchaseChart');
+            if (elSales) {
+                new ApexCharts(elSales, {
+                    series: [{ name: 'Satış', data: salesData }, { name: 'Alış', data: purchaseData }],
+                    colors: ['#f7a085', '#E66239'],
+                    chart: { type: 'bar', height: 350, width: '100%', parentHeightOffset: 0, toolbar: { show: false } },
+                    grid: { show: true, borderColor: '#e2e8f0' },
+                    legend: { show: true, fontFamily: 'Poppins, serif', fontWeight: 500, markers: { size: 5, shape: 'square', strokeWidth: 0 } },
+                    plotOptions: { bar: { horizontal: false, columnWidth: '85%', borderRadius: 3, borderRadiusApplication: 'end' } },
+                    dataLabels: { enabled: false },
+                    stroke: { show: false, width: 2, colors: ['transparent'] },
+                    xaxis: { categories: categories, axisBorder: { show: false, color: '#e2e8f0' }, axisTicks: { show: false, color: '#e2e8f0' } },
+                    yaxis: { labels: { formatter: function (v) { return v + 'k'; } }, title: { text: '₺ (bin)' } },
+                    fill: { opacity: 1 },
+                    tooltip: { y: { formatter: function (val) { return '₺ ' + val; } } }
+                }).render();
+            }
+            var elGeneral = document.getElementById('dashboardGeneralChart');
+            if (elGeneral) {
+                new ApexCharts(elGeneral, {
+                    series: generalSeries,
+                    labels: generalLabels,
+                    chart: { type: 'donut', height: 200 },
+                    colors: ['#5BE49B', '#E66239', '#f7a085'],
+                    legend: { position: 'bottom', fontSize: '12px' },
+                    dataLabels: { enabled: true },
+                    plotOptions: { pie: { donut: { size: '65%', labels: { show: true, total: { show: true, label: 'Toplam' } } } } }
+                }).render();
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderCharts);
+        } else {
+            renderCharts();
+        }
+    })();
+</script>

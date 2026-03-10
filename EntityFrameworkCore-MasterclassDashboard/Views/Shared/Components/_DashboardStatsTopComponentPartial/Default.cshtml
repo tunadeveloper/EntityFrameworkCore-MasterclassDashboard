@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <h2 class="mb-3 fs-6">Ortalama Sipariş Tutarı</h2>
-                    <h3 class="fw-bold mb-0">₺ViewBag.avgOrderPrice</h3>
+                    <h3 class="fw-bold mb-0">₺@ViewBag.avgOrderPrice</h3>
                     <p class="text-info mb-0 small">Geçen aya göre %10 artış</p>
                 </div>
             </div>
@@ -62,8 +62,8 @@
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between border-bottom pb-5 mb-3">
                     <div>
-                        <h3 class="fw-bold h4">$25,458</h3>
-                        <span>Toplam Kâr</span>
+                        <h3 class="fw-bold h4">₺@ViewBag.totalCustomerBalance</h3>
+                        <span>Toplam Müşteri Bakiyesi</span>
                     </div>
                     <div>
                         <i class="ti ti-layers-subtract fs-1 text-primary"></i>
@@ -81,8 +81,8 @@
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between border-bottom pb-5 mb-3">
                     <div>
-                        <h3 class="fw-bold h4">$45,458</h3>
-                        <span>Toplam Ödeme İadeleri</span>
+                        <h3 class="fw-bold h4">₺@ViewBag.totalStockValue</h3>
+                        <span>Toplam Stok Değeri</span>
                     </div>
                     <div>
                         <i class="ti ti-credit-card fs-1 text-danger"></i>
@@ -100,8 +100,8 @@
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between border-bottom pb-5 mb-3">
                     <div>
-                        <h3 class="fw-bold h4">$34,458</h3>
-                        <span>Toplam Gider</span>
+                        <h3 class="fw-bold h4">₺@ViewBag.maxProductPrice</h3>
+                        <span>En Pahalı Ürünün Fiyatı</span>
                     </div>
                     <div>
                         <i class="ti ti-cash-banknote fs-1 text-warning"></i>

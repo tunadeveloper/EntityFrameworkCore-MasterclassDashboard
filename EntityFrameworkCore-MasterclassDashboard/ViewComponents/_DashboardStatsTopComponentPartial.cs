@@ -19,6 +19,10 @@ namespace EntityFrameworkCore_MasterclassDashboard.ViewComponents
             ViewBag.minOrderPrice = _context.Orders.Min(x=>x.TotalPrice).ToString("F2");
             ViewBag.sumOrderPrice = _context.Orders.Sum(x=>x.TotalPrice).ToString("F2");
             ViewBag.avgOrderPrice = _context.Orders.Average(x=>x.TotalPrice).ToString("F2");
+
+            ViewBag.totalCustomerBalance = _context.Customers.Sum(x => x.CustomeBalance).ToString("F2");
+            ViewBag.totalStockValue = _context.Products.Sum(x => x.ProductStock * x.ProductPrice).ToString("F2");
+            ViewBag.maxProductPrice = _context.Products.Max(x => x.ProductPrice).ToString("F2");
             return View();
         }
     }
