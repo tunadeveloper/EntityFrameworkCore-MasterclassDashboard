@@ -1,14 +1,15 @@
+@using EntityFrameworkCore_MasterclassDashboard.Entities
 @{
     ViewData["Title"] = "Yeni Ürün Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Product
 <main id="content" class="content py-10">
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center gap-2">
-                    <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary btn-sm rounded-2">
+                    <a href="/Product/CreateProduct" class="btn btn-outline-secondary btn-sm rounded-2">
                         <i class="ti ti-arrow-left"></i>
                     </a>
                     <div>
@@ -19,7 +20,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
                 <div class="card border border-secondary border-opacity-25 rounded-2 shadow-sm">
                     <div class="card-header bg-light bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3">
@@ -27,14 +28,13 @@
                     </div>
                     <div class="card-body p-4">
                         <form method="post" action="@Url.Action("CreateProduct", "Product")">
-                            @Html.AntiForgeryToken()
                             <div class="mb-4">
                                 <label for="ProductName" class="form-label fw-semibold">Ürün Adı <span class="text-danger">*</span></label>
                                 <input type="text" name="ProductName" id="ProductName" class="form-control rounded-2" placeholder="Örn. Kablosuz Kulaklık" value="">
                             </div>
                             <div class="mb-4">
                                 <label for="ProductPrice" class="form-label fw-semibold">Fiyat (₺) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" name="ProductPrice" id="ProductPrice" class="form-control rounded-2" placeholder="0,00" value="">
+                                <input type="text" name="ProductPrice" id="ProductPrice" class="form-control rounded-2" placeholder="0,00" value="">
                             </div>
                             <div class="mb-4">
                                 <label for="ProductStock" class="form-label fw-semibold">Stok Miktarı <span class="text-danger">*</span></label>
@@ -42,16 +42,14 @@
                             </div>
                             <div class="mb-4">
                                 <label for="CategoryId" class="form-label fw-semibold">Kategori</label>
-                                <select name="CategoryId" id="CategoryId" class="form-select rounded-2">
-                                    <option value="1">Elektronik</option>
-                                    <option value="2">Giyim</option>
-                                    <option value="3">Ev & Yaşam</option>
+                                <select name="CategoryId" id="CategoryId" class="form-select rounded-2" asp-items="ViewBag.categoryList" required>
+                                    <option value="">--- Kategori Seçiniz ---</option>
                                 </select>
                             </div>
                             <div class="mb-4">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="IsActive" id="IsActive" value="true" checked>
-                                    <label class="form-check-label" for="IsActive">Aktif</label>
+                                    <input class="form-check-input" asp-for="IsActive" />
+                                    <label class="form-check-label" asp-for="IsActive">Aktif</label>
                                 </div>
                             </div>
                             <hr class="my-4">
@@ -59,7 +57,7 @@
                                 <button type="submit" class="btn btn-primary rounded-2">
                                     <i class="ti ti-check me-1"></i> Kaydet
                                 </button>
-                                <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary rounded-2">İptal</a>
+                                <a href="/Product/Index" class="btn btn-outline-secondary rounded-2">İptal</a>
                             </div>
                         </form>
                     </div>

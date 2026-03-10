@@ -1,8 +1,9 @@
+@using EntityFrameworkCore_MasterclassDashboard.Entities
 @{
     ViewData["Title"] = "Ürün Güncelle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Product
 <main id="content" class="content py-10">
     <div class="container-fluid">
         <div class="row mb-4">
@@ -19,7 +20,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
                 <div class="card border border-secondary border-opacity-25 rounded-2 shadow-sm">
                     <div class="card-header bg-light bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3">
@@ -27,37 +28,34 @@
                     </div>
                     <div class="card-body p-4">
                         <form method="post" action="@Url.Action("UpdateProduct", "Product")">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="Id" value="1">
+                            <input type="hidden" name="Id" value="@Model.Id">
                             <div class="mb-4">
                                 <label for="ProductName" class="form-label fw-semibold">Ürün Adı <span class="text-danger">*</span></label>
-                                <input type="text" name="ProductName" id="ProductName" class="form-control rounded-2" placeholder="Örn. Kablosuz Kulaklık" value="Örnek Ürün A">
+                                <input type="text" name="ProductName" id="ProductName" class="form-control rounded-2" placeholder="Örn. Kablosuz Kulaklık" value="@Model.ProductName">
                             </div>
                             <div class="mb-4">
                                 <label for="ProductPrice" class="form-label fw-semibold">Fiyat (₺) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" name="ProductPrice" id="ProductPrice" class="form-control rounded-2" placeholder="0,00" value="199.00">
+                                <input type="text" step="0.01" name="ProductPrice" id="ProductPrice" class="form-control rounded-2" placeholder="0,00" value="@Model.ProductPrice">
                             </div>
                             <div class="mb-4">
                                 <label for="ProductStock" class="form-label fw-semibold">Stok Miktarı <span class="text-danger">*</span></label>
-                                <input type="number" name="ProductStock" id="ProductStock" class="form-control rounded-2" placeholder="0" value="120" min="0">
+                                <input type="number" name="ProductStock" id="ProductStock" class="form-control rounded-2" placeholder="0" value="@Model.ProductStock" min="0">
                             </div>
                             <div class="mb-4">
                                 <label for="CategoryId" class="form-label fw-semibold">Kategori</label>
-                                <select name="CategoryId" id="CategoryId" class="form-select rounded-2">
-                                    <option value="1" selected>Elektronik</option>
-                                    <option value="2">Giyim</option>
-                                    <option value="3">Ev & Yaşam</option>
+                                <select name="CategoryId" id="CategoryId" class="form-select rounded-2" asp-items="ViewBag.categoryList">
+                                    <option value="" >--- Kategori Seçiniz ---</option>
                                 </select>
                             </div>
                             <div class="mb-4">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="IsActive" id="IsActive" value="true" checked>
+                                    <input asp-for="IsActive" class="form-check-input" />
                                     <label class="form-check-label" for="IsActive">Aktif</label>
                                 </div>
                             </div>
                             <hr class="my-4">
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary rounded-2">
+                                <button class="btn btn-primary rounded-2">
                                     <i class="ti ti-device-floppy me-1"></i> Güncelle
                                 </button>
                                 <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary rounded-2">İptal</a>
