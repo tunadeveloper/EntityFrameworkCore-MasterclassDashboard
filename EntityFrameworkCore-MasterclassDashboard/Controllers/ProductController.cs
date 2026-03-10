@@ -22,6 +22,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             var products = _context.Products.Include(x => x.Category).AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
                 products = products.Where(x => x.ProductName.Contains(searchString));
+
             var model = products.OrderBy(x => x.Id).ToPagedList(page ?? 1, 10);
 
             ViewBag.totalProduct = _context.Products.Count().ToString("N0");
