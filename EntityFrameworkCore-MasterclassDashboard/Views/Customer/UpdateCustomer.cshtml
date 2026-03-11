@@ -1,0 +1,79 @@
+@using EntityFrameworkCore_MasterclassDashboard.Entities
+@{
+    ViewData["Title"] = "Müşteri Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Customer
+<main id="content" class="content py-10">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center gap-2">
+                    <a href="@Url.Action("Index", "Customer")" class="btn btn-outline-secondary btn-sm rounded-2">
+                        <i class="ti ti-arrow-left"></i>
+                    </a>
+                    <div>
+                        <h1 class="fs-3 mb-1">Müşteri Güncelle</h1>
+                        <p class="text-muted mb-0">Müşteri bilgilerini düzenleyin.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card border border-secondary border-opacity-25 rounded-2 shadow-sm">
+                    <div class="card-header bg-light bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3">
+                        <h5 class="mb-0 fw-bold"><i class="ti ti-edit me-2 text-primary"></i>Müşteri Bilgileri</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" action="@Url.Action("UpdateCustomer", "Customer")">
+                            <input type="hidden" name="Id" value="@Model.Id">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="CustomeName" class="form-label fw-semibold">Ad <span class="text-danger">*</span></label>
+                                    <input type="text" name="CustomeName" id="CustomeName" class="form-control rounded-2" placeholder="Örn. Ahmet" value="@Model.CustomeName">
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label for="CustomeSurname" class="form-label fw-semibold">Soyad <span class="text-danger">*</span></label>
+                                    <input type="text" name="CustomeSurname" id="CustomeSurname" class="form-control rounded-2" placeholder="Örn. Yılmaz" value="@Model.CustomeSurname">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="CustomerImageUrl" class="form-label fw-semibold">Profil Resmi URL</label>
+                                <input type="text" name="CustomerImageUrl" id="CustomerImageUrl" class="form-control rounded-2" placeholder="https://..." value="@Model.CustomerImageUrl">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="CustomeCity" class="form-label fw-semibold">Şehir <span class="text-danger">*</span></label>
+                                    <input type="text" name="CustomeCity" id="CustomeCity" class="form-control rounded-2" placeholder="Örn. İstanbul" value="@Model.CustomeCity">
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label for="CustomeDistrict" class="form-label fw-semibold">İlçe</label>
+                                    <input type="text" name="CustomeDistrict" id="CustomeDistrict" class="form-control rounded-2" placeholder="Örn. Kadıköy" value="@Model.CustomeDistrict">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="CustomeBalance" class="form-label fw-semibold">Bakiye (₺) <span class="text-danger">*</span></label>
+                                <input type="text" step="0.01" name="CustomeBalance" id="CustomeBalance" class="form-control rounded-2" placeholder="0,00" value="@Model.CustomeBalance" min="0">
+                            </div>
+                            <div class="mb-4">
+                                <div class="form-check form-switch">
+                                    <input asp-for="IsActive" class="form-check-input" />
+                                    <label class="form-check-label" for="IsActive">Aktif</label>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary rounded-2">
+                                    <i class="ti ti-device-floppy me-1"></i> Güncelle
+                                </button>
+                                <a href="@Url.Action("Index", "Customer")" class="btn btn-outline-secondary rounded-2">İptal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

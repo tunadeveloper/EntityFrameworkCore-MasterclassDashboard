@@ -1,0 +1,158 @@
+@using EntityFrameworkCore_MasterclassDashboard.Entities
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@{
+    ViewData["Title"] = "Müşteri Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IPagedList<Customer>
+<main id="content" class="content py-10">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="mb-6">
+                        <h1 class="fs-3 mb-1">Müşteri Listesi</h1>
+                        <p class="text-muted mb-0">Tüm müşterileri görüntüleyin ve yönetin.</p>
+                    </div>
+                    <a href="/Customer/CreateCustomer" class="btn btn-primary rounded-2">
+                        <i class="ti ti-plus me-1"></i> Yeni Müşteri Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-lg-4 col-12">
+                <div class="card p-4 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-2 h-100">
+                    <div class="d-flex gap-3">
+                        <div class="icon-shape icon-md bg-primary text-white rounded-2 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-users fs-4"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-2 fs-6 text-muted">Toplam Müşteri</h2>
+                            <h3 class="fw-bold mb-0">@ViewBag.totalCustomer</h3>
+                            <p class="text-primary mb-0 small">Kayıtlı müşteri sayısı</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card p-4 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-2 h-100">
+                    <div class="d-flex gap-3">
+                        <div class="icon-shape icon-md bg-success text-white rounded-2 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-user-check fs-4"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-2 fs-6 text-muted">Aktif Müşteri</h2>
+                            <h3 class="fw-bold mb-0">@ViewBag.activeCustomer</h3>
+                            <p class="text-success mb-0 small">Aktif kayıt sayısı</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card p-4 bg-info bg-opacity-10 border border-info border-opacity-25 rounded-2 h-100">
+                    <div class="d-flex gap-3">
+                        <div class="icon-shape icon-md bg-info text-white rounded-2 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-currency-lira fs-4"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-2 fs-6 text-muted">Toplam Bakiye</h2>
+                            <h3 class="fw-bold mb-0">₺@ViewBag.totalBalance</h3>
+                            <p class="text-info mb-0 small">Tüm müşterilerin bakiyesi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card border border-secondary border-opacity-25 rounded-2 shadow-sm overflow-hidden">
+                    <div class="card-header bg-light bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                            <h5 class="mb-0 fw-bold"><i class="ti ti-list me-2 text-primary"></i>Müşteriler</h5>
+
+                            <form asp-action="Index" method="get" class="d-flex gap-2">
+                                <div class="input-group input-group-sm" style="width: 300px;">
+                                    <input type="text" name="searchString" value="@ViewBag.Search" class="form-control" placeholder="Müşteri ara...">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="ti ti-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="border-0 ps-4">Id</th>
+                                        <th class="border-0">Ad</th>
+                                        <th class="border-0">Soyad</th>
+                                        <th class="border-0">Şehir</th>
+                                        <th class="border-0">İlçe</th>
+                                        <th class="border-0">Bakiye</th>
+                                        <th class="border-0">Oluşturulma</th>
+                                        <th class="border-0">Durum</th>
+                                        <th class="border-0 pe-4 text-end">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="ps-4">@item.Id</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    @if (!string.IsNullOrEmpty(item.CustomerImageUrl))
+                                                    {
+                                                        <img src="@item.CustomerImageUrl" alt="@item.CustomeName" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width:32px;height:32px;">
+                                                            <i class="ti ti-user text-primary" style="font-size:14px;"></i>
+                                                        </div>
+                                                    }
+                                                    <span>@item.CustomeName</span>
+                                                </div>
+                                            </td>
+                                            <td>@item.CustomeSurname</td>
+                                            <td>@item.CustomeCity</td>
+                                            <td><small class="text-muted">@item.CustomeDistrict</small></td>
+                                            <td><span class="fw-semibold">₺@item.CustomeBalance.ToString("N2")</span></td>
+                                            <td><small class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</small></td>
+                                            <td><span class="badge bg-@(item.IsActive ? "success" : "danger") rounded-pill">@(item.IsActive ? "Aktif" : "Pasif")</span></td>
+                                            <td class="pe-4 text-end">
+                                                <a href="/Customer/UpdateCustomer/@item.Id" class="btn btn-sm btn-outline-primary rounded-2 me-1"><i class="ti ti-edit"></i></a>
+                                                <a href="/Customer/DeleteCustomer/@item.Id" class="btn btn-sm btn-outline-danger rounded-2"><i class="ti ti-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer bg-white border-top border-secondary border-opacity-25 px-4 py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                            <div class="d-flex align-items-center gap-2 text-muted small">
+                                <span class="rounded-1 bg-primary bg-opacity-10 px-2 py-1">
+                                    <i class="ti ti-users text-primary"></i>
+                                </span>
+                                <span>Toplam <strong class="text-dark">@ViewBag.totalCustomer</strong> müşteri listeleniyor</span>
+                            </div>
+                            <nav aria-label="Sayfa navigasyonu">
+                                @Html.PagedListPager(Model, page => Url.Action(nameof(Index), new { page }), new PagedListRenderOptions
+                                {
+                                    UlElementClasses = new[] { "pagination", "pagination-sm", "mb-0", "justify-content-end" },
+                                    LiElementClasses = new[] { "page-item" },
+                                    PageClasses = new[] { "page-link" },
+                                    ActiveLiElementClass = "active"
+                                })
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
