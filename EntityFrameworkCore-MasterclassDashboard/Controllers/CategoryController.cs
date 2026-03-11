@@ -28,11 +28,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
 
             ViewBag.totalCategory   = _context.Categories.Count().ToString("N0");
             ViewBag.totalProduct    = _context.Products.Count().ToString("N0");
-            var productCounts = _context.Categories
-                .Include(x => x.Products)
-                .ToList()
-                .Select(x => x.Products.Count)
-                .ToList();
+            var productCounts = _context.Categories.Include(x => x.Products).Select(x => x.Products.Count).ToList();
 
             ViewBag.avgProductCount = productCounts.Average().ToString("N1");
 

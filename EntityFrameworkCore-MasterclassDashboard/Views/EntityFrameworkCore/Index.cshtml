@@ -1,0 +1,522 @@
+@{
+    ViewData["Title"] = "EF Core Ödev Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="content" class="content py-10">
+<div class="container-fluid">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div>
+                    <h1 class="fs-3 mb-1">EntityFramework Core Methodları</h1>
+                    <p class="text-muted mb-0">Her metod için hazırlanmış pratik ödevler — kodu kendin yaz, algoritmayı kendin geliştir.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-primary rounded-pill px-3 py-2 fs-6"><i class="ti ti-list-check me-1"></i> 62 Method</span>
+                    <span class="badge bg-success rounded-pill px-3 py-2 fs-6"><i class="ti ti-category-2 me-1"></i> 8 Grup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md bg-primary text-white rounded-2 d-flex align-items-center justify-content-center"><i class="ti ti-pencil fs-5"></i></div>
+        <div><h5 class="fw-bold text-primary mb-0">Grup 1 — Temel CRUD İşlemleri</h5><small class="text-muted">ToList · Add · Find · Remove · Update · SaveChanges</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-primary border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-primary rounded-2 fs-6 px-2 py-1 mt-1">01</span>
+            <div><code class="text-primary fw-bold">.ToList()</code>
+            <p class="text-muted small mt-1 mb-2">Veritabanındaki tüm ürünleri listeye çek ve her birinin adını konsola yazdır.</p>
+                            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0d6efd;flex-shrink:0;"></span>@ViewBag.productList kayıt listelendi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-primary border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-primary rounded-2 fs-6 px-2 py-1 mt-1">02</span>
+            <div><code class="text-primary fw-bold">.Add() &amp; .SaveChanges()</code>
+            <p class="text-muted small mt-1 mb-2">Yeni bir ürün nesnesi oluştur, DbSet'e ekle ve değişiklikleri veritabanına kaydet.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0d6efd;flex-shrink:0;"></span>"Laptop" eklendi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-primary border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-primary rounded-2 fs-6 px-2 py-1 mt-1">03</span>
+            <div><code class="text-primary fw-bold">.Find()</code>
+            <p class="text-muted small mt-1 mb-2">Id değerine göre ilgili müşteriyi bul ve bilgilerini görüntüle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0d6efd;flex-shrink:0;"></span>@ViewBag.findCustomer</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-primary border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-primary rounded-2 fs-6 px-2 py-1 mt-1">04</span>
+            <div><code class="text-primary fw-bold">.Remove() &amp; .SaveChanges()</code>
+            <p class="text-muted small mt-1 mb-2">Id'ye sahip siparişi bul, sil ve işlemi veritabanına yansıt.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0d6efd;flex-shrink:0;"></span>Sipariş #12 silindi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-primary border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-primary rounded-2 fs-6 px-2 py-1 mt-1">05</span>
+            <div><code class="text-primary fw-bold">.Update() &amp; .SaveChanges()</code>
+            <p class="text-muted small mt-1 mb-2">Belirli bir ürünün adını ve fiyatını güncelle, ardından değişikliği kaydet.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0d6efd;flex-shrink:0;"></span>Fiyat ₺299 → ₺349</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md bg-success text-white rounded-2 d-flex align-items-center justify-content-center"><i class="ti ti-calculator fs-5"></i></div>
+        <div><h5 class="fw-bold text-success mb-0">Grup 2 — Agregasyon / İstatistik</h5><small class="text-muted">Count · Min · Max · Sum · Average · LongCount · CountBy</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">06</span>
+            <div><code class="text-success fw-bold">.Count()</code>
+            <p class="text-muted small mt-1 mb-2">Veritabanında kaç adet aktif ürün bulunduğunu hesapla.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>@ViewBag.activeCount adet</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">07</span>
+            <div><code class="text-success fw-bold">.Min()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm ürünler arasında en düşük fiyatlı olanı bul.</p>
+                            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>Minimum: ₺@ViewBag.lowPriceProduct</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">08</span>
+            <div><code class="text-success fw-bold">.Max()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm müşteriler arasında en yüksek bakiyeye sahip olanı bul.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>Max: ₺@ViewBag.highBalanceCustomer</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">09</span>
+            <div><code class="text-success fw-bold">.Sum()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm siparişlerin toplam gelirini (TotalPrice) hesapla.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>Toplam: ₺@ViewBag.totalCustomerBalance</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">10</span>
+            <div><code class="text-success fw-bold">.Average()</code>
+            <p class="text-muted small mt-1 mb-2">Ürün stoklarının ortalamasını hesapla ve görüntüle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>Ortalama: @ViewBag.avgProductStock</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">11</span>
+            <div><code class="text-success fw-bold">.LongCount()</code>
+            <p class="text-muted small mt-1 mb-2">Toplam sipariş sayısını <em>long</em> veri tipiyle döndür.</p>
+                            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>@ViewBag.totalOrderLong sipariş</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-success border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-success rounded-2 fs-6 px-2 py-1 mt-1">12</span>
+            <div><code class="text-success fw-bold">.CountBy()</code>
+            <p class="text-muted small mt-1 mb-2">Ürünleri IsActive alanına göre grupla; her grupta kaç ürün olduğunu listele.</p>
+                            @foreach (var item in ViewBag.productActiveGroups)
+                            {
+                                <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold"
+                                      style="background:rgba(25,135,84,.10);color:#198754;font-size:11px;">
+
+                                    <span style="width:7px;height:7px;border-radius:50%;background:#198754;flex-shrink:0;"></span>
+
+                                    @if (item.Key == true)
+                                    {
+                                        @:Aktif:@item.Value
+                                    }
+                                    else 
+                                    {
+                                        @:Pasif:@item.Value
+                                    }
+                                </span>
+                            }
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md bg-info text-white rounded-2 d-flex align-items-center justify-content-center"><i class="ti ti-filter fs-5"></i></div>
+        <div><h5 class="fw-bold text-info mb-0">Grup 3 — Sorgulama / Filtreleme</h5><small class="text-muted">Where · Select · Include · FirstOrDefault · First · Last · SingleOrDefault · Any · All · Contains · StartsWith · EndsWith · AsQueryable · AsNoTracking · DefaultIfEmpty</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">13</span>
+            <div><code class="text-info fw-bold">.Where()</code>
+            <p class="text-muted small mt-1 mb-2">Stok miktarı 50'nin üzerinde olan aktif ürünleri filtrele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.filteredProducts kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">14</span>
+            <div><code class="text-info fw-bold">.Select()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm siparişlerden yalnızca ürün adı ve toplam fiyat bilgisini seç.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.orderSummary kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">15</span>
+            <div><code class="text-info fw-bold">.Include()</code>
+            <p class="text-muted small mt-1 mb-2">Siparişleri hem ürün hem de müşteri bilgileriyle birlikte getir.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.ordersWithDetails kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">16</span>
+            <div><code class="text-info fw-bold">.FirstOrDefault()</code>
+            <p class="text-muted small mt-1 mb-2">Fiyatı 1000 TL'nin üzerinde olan ilk ürünü bul; yoksa null döndür.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.firstExpensiveProduct</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">17</span>
+            <div><code class="text-info fw-bold">.First()</code>
+            <p class="text-muted small mt-1 mb-2">Kayıtlardaki ilk müşteriyi getir; bulunamazsa exception fırlat.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.firstCustomer</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">18</span>
+            <div><code class="text-info fw-bold">.Last()</code>
+            <p class="text-muted small mt-1 mb-2">En son eklenen siparişi (Id'ye göre sıralayarak) bul.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>Sipariş #@(((dynamic)ViewBag.lastOrder)?.Id)</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">19</span>
+            <div><code class="text-info fw-bold">.SingleOrDefault()</code>
+            <p class="text-muted small mt-1 mb-2">Adı tam olarak 'Laptop' olan tek ürünü bul; yoksa null döndür.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@(((dynamic)ViewBag.singleProduct)?.ProductName)</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">20</span>
+            <div><code class="text-info fw-bold">.Any()</code>
+            <p class="text-muted small mt-1 mb-2">Toplam fiyatı 5000 TL'nin üzerinde olan sipariş var mı? Kontrol et.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.hasExpensiveOrder</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">21</span>
+            <div><code class="text-info fw-bold">.All()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm ürünlerin IsActive alanı true mu? Doğrula.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@ViewBag.allProductsActive</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">22</span>
+            <div><code class="text-info fw-bold">.Contains()</code>
+            <p class="text-muted small mt-1 mb-2">Ürün adları listesinde 'Kulaklık' değeri var mı? Kontrol et.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>@(((IQueryable<dynamic>)ViewBag.containsHeadphone).Count()) eşleşme</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">23</span>
+            <div><code class="text-info fw-bold">.StartsWith()</code>
+            <p class="text-muted small mt-1 mb-2">Adı 'A' harfiyle başlayan tüm müşterileri listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>7 kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">24</span>
+            <div><code class="text-info fw-bold">.EndsWith()</code>
+            <p class="text-muted small mt-1 mb-2">Şehir adı 'i' ile biten müşterileri filtrele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>12 kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">25</span>
+            <div><code class="text-info fw-bold">.AsQueryable()</code>
+            <p class="text-muted small mt-1 mb-2">Ürün sorgusunu IQueryable olarak başlat; koşullu aktiflik filtresi ekle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>24 kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">26</span>
+            <div><code class="text-info fw-bold">.AsNoTracking()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm kategorileri değişiklik takibi olmadan (read-only) listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>6 kategori</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-info border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-info rounded-2 fs-6 px-2 py-1 mt-1">27</span>
+            <div><code class="text-info fw-bold">.DefaultIfEmpty()</code>
+            <p class="text-muted small mt-1 mb-2">Fiyatı 99.999 TL'nin üzerinde ürün getir; sonuç boşsa varsayılan değer döndür.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(13,202,240,.12);color:#0aa2c0;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#0dcaf0;flex-shrink:0;"></span>null döndü</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md bg-warning text-white rounded-2 d-flex align-items-center justify-content-center"><i class="ti ti-arrows-sort fs-5"></i></div>
+        <div><h5 class="fw-bold text-warning mb-0">Grup 4 — Sıralama / Sayfalama</h5><small class="text-muted">OrderBy · OrderByDesc · Take · Skip · TakeLast · SkipLast · Reverse · Chunk · Index</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">28</span>
+            <div><code class="text-warning fw-bold">.OrderBy()</code>
+            <p class="text-muted small mt-1 mb-2">Ürünleri fiyatına göre küçükten büyüğe sırala.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>₺49 → ₺15.800</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">29</span>
+            <div><code class="text-warning fw-bold">.OrderByDescending()</code>
+            <p class="text-muted small mt-1 mb-2">Müşterileri bakiyelerine göre büyükten küçüğe sırala.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>₺15.800 → ₺49</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">30</span>
+            <div><code class="text-warning fw-bold">.Take()</code>
+            <p class="text-muted small mt-1 mb-2">En pahalı 5 ürünü fiyata göre azalan sırada listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>5 kayıt alındı</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">31</span>
+            <div><code class="text-warning fw-bold">.Skip()</code>
+            <p class="text-muted small mt-1 mb-2">İlk 10 siparişi atla, kalan siparişleri listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>77 kayıt kaldı</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">32</span>
+            <div><code class="text-warning fw-bold">.TakeLast()</code>
+            <p class="text-muted small mt-1 mb-2">Kayıt tarihine göre en son eklenen 3 ürünü getir.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>Son 3 kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">33</span>
+            <div><code class="text-warning fw-bold">.SkipLast()</code>
+            <p class="text-muted small mt-1 mb-2">Listeyi Id'ye göre sırala; son 5 kaydı atlayarak geri kalanı döndür.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>82 kayıt kaldı</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">34</span>
+            <div><code class="text-warning fw-bold">.Reverse()</code>
+            <p class="text-muted small mt-1 mb-2">Ürünleri Id'ye göre sırala, sonra listeyi tamamen ters çevir.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>Ters sıralı 87</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">35</span>
+            <div><code class="text-warning fw-bold">.Chunk()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm siparişleri 10'arlı sayfalara böl ve ilk sayfayı görüntüle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>9 sayfa oluştu</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-warning border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-warning rounded-2 fs-6 px-2 py-1 mt-1">36</span>
+            <div><code class="text-warning fw-bold">.Index()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm ürünleri index numarasıyla birlikte listele (0'dan başlayan sıra).</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(255,193,7,.13);color:#997404;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#ffc107;flex-shrink:0;"></span>Index: 0 → 86</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md text-white rounded-2 d-flex align-items-center justify-content-center" style="background:#9b59b6;"><i class="ti ti-circle-dot fs-5"></i></div>
+        <div><h5 class="fw-bold mb-0" style="color:#9b59b6;">Grup 5 — Set / Küme İşlemleri</h5><small class="text-muted">Distinct · Union · UnionBy · Concat · Except · ExceptBy · Intersect · GroupBy · GroupJoin · Join</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">37</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Distinct()</code>
+            <p class="text-muted small mt-1 mb-2">Müşterilerin kayıtlı oldukları benzersiz şehirleri tekrarsız olarak listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>14 benzersiz şehir</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">38</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Union()</code>
+            <p class="text-muted small mt-1 mb-2">Fiyatı 100 TL altındaki ürünler ile 900 TL üstündeki ürünleri birleştir.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>23 kayıt birleşti</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">39</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.UnionBy()</code>
+            <p class="text-muted small mt-1 mb-2">Aktif ürünler ile stoğu 0'dan büyük ürünleri Id alanına göre tekrarsız birleştir.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>31 benzersiz kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">40</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Concat()</code>
+            <p class="text-muted small mt-1 mb-2">İstanbul ile Ankara'daki müşterileri tek listede birleştir (tekrarlar dahil).</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>18 kayıt (tekrarlı)</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">41</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Except()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm ürün adlarından yalnızca stokta olanların adlarını çıkar; sonucu listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>52 kayıt kaldı</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">42</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.ExceptBy()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm siparişlerden, toplam fiyatı 1000 TL üzerinde olanları Id bazlı çıkar.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>61 kayıt kaldı</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">43</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Intersect()</code>
+            <p class="text-muted small mt-1 mb-2">Hem aktif hem de stoğu 0'dan büyük olan ürünlerin kesişimini bul.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>19 ortak kayıt</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">44</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.GroupBy()</code>
+            <p class="text-muted small mt-1 mb-2">Siparişleri müşteri Id'sine göre grupla; her müşterinin sipariş sayısını listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>12 müşteri grubu</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">45</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.GroupJoin()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm kategorileri, her kategorideki ürün listesiyle birleştirerek gruplu yapı oluştur.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>6 kategori grubu</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(155,89,182,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#9b59b6;">46</span>
+            <div><code class="fw-bold" style="color:#9b59b6;">.Join()</code>
+            <p class="text-muted small mt-1 mb-2">Siparişleri ürünlerle birleştir; sipariş Id'si, ürün adı ve toplam fiyatı göster.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(155,89,182,.12);color:#9b59b6;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#9b59b6;flex-shrink:0;"></span>87 eşleşen kayıt</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md bg-danger text-white rounded-2 d-flex align-items-center justify-content-center"><i class="ti ti-topology-full fs-5"></i></div>
+        <div><h5 class="fw-bold text-danger mb-0">Grup 6 — Zincir / Akış İşlemleri</h5><small class="text-muted">Append · Prepend · Aggregate · Cast&lt;T&gt; · OfType&lt;T&gt; · AsParallel</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">47</span>
+            <div><code class="text-danger fw-bold">.Append()</code>
+            <p class="text-muted small mt-1 mb-2">Mevcut ürün listesinin sonuna geçici (kaydedilmeyecek) bir ürün ekle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>25 kayıt (son+1)</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">48</span>
+            <div><code class="text-danger fw-bold">.Prepend()</code>
+            <p class="text-muted small mt-1 mb-2">Mevcut ürün listesinin başına geçici bir ürün ekle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>25 kayıt (baş+1)</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">49</span>
+            <div><code class="text-danger fw-bold">.Aggregate()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm ürün adlarını virgülle ayırarak tek bir string'e dönüştür.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>Laptop, Telefon...</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">50</span>
+            <div><code class="text-danger fw-bold">.Cast&lt;T&gt;()</code>
+            <p class="text-muted small mt-1 mb-2">Ürün listesini object tipine dönüştür; ardından Product tipine geri cast et.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>24 object→Product</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">51</span>
+            <div><code class="text-danger fw-bold">.OfType&lt;T&gt;()</code>
+            <p class="text-muted small mt-1 mb-2">Karışık tipteki object listesinden yalnızca Product olanları filtrele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>2 Product seçildi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 border border-danger border-opacity-25 rounded-2"><div class="d-flex align-items-start gap-3">
+            <span class="badge bg-danger rounded-2 fs-6 px-2 py-1 mt-1">52</span>
+            <div><code class="text-danger fw-bold">.AsParallel()</code>
+            <p class="text-muted small mt-1 mb-2">Büyük ürün listesini paralel işleyerek fiyatı 500 TL üzerinde olanları filtrele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(220,53,69,.10);color:#dc3545;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#dc3545;flex-shrink:0;"></span>41 kayıt paralelde</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md text-white rounded-2 d-flex align-items-center justify-content-center" style="background:#16a085;"><i class="ti ti-clock-bolt fs-5"></i></div>
+        <div><h5 class="fw-bold mb-0" style="color:#16a085;">Grup 7 — Async &amp; Range İşlemleri</h5><small class="text-muted">ToListAsync · AddAsync · SaveChangesAsync · FindAsync · AddRange · AddRangeAsync · AnyAsync · AllAsync</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-5">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">53</span>
+            <div><code class="fw-bold" style="color:#16a085;">.ToListAsync()</code>
+            <p class="text-muted small mt-1 mb-2">Tüm müşterileri asenkron olarak listele.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>45 kayıt async</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">54</span>
+            <div><code class="fw-bold" style="color:#16a085;">.AddAsync() &amp; .SaveChangesAsync()</code>
+            <p class="text-muted small mt-1 mb-2">Yeni bir kategori asenkron olarak ekle ve değişiklikleri asenkron kaydet.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>"Elektronik" eklendi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">55</span>
+            <div><code class="fw-bold" style="color:#16a085;">.FindAsync()</code>
+            <p class="text-muted small mt-1 mb-2">Kullanıcıdan alınan Id ile ilgili siparişi asenkron olarak bul.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>Sipariş #55</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">56</span>
+            <div><code class="fw-bold" style="color:#16a085;">.AddRange()</code>
+            <p class="text-muted small mt-1 mb-2">3 adet yeni ürünü tek çağrıyla toplu olarak veritabanına ekle.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>3 ürün eklendi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">57</span>
+            <div><code class="fw-bold" style="color:#16a085;">.AddRangeAsync()</code>
+            <p class="text-muted small mt-1 mb-2">3 adet yeni müşteriyi asenkron ve toplu olarak ekle, kaydet.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>3 müşteri eklendi</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">58</span>
+            <div><code class="fw-bold" style="color:#16a085;">.AnyAsync()</code>
+            <p class="text-muted small mt-1 mb-2">Asenkron olarak: stok miktarı 0 olan ürün var mı? Kontrol et.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>true</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(22,160,133,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#16a085;">59</span>
+            <div><code class="fw-bold" style="color:#16a085;">.AllAsync()</code>
+            <p class="text-muted small mt-1 mb-2">Asenkron olarak: tüm siparişlerin IsActive alanı true mu? Doğrula.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(22,160,133,.12);color:#16a085;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#16a085;flex-shrink:0;"></span>false</span>
+            </div></div></div></div>
+    </div>
+
+    <div class="row mb-2"><div class="col-12"><div class="d-flex align-items-center gap-2 mb-3">
+        <div class="icon-shape icon-md text-white rounded-2 d-flex align-items-center justify-content-center" style="background:#e67e22;"><i class="ti ti-radar fs-5"></i></div>
+        <div><h5 class="fw-bold mb-0" style="color:#e67e22;">Grup 8 — İzleme &amp; Varlık Yönetimi</h5><small class="text-muted">Attach · AttachRange · Entry</small></div>
+    </div></div></div>
+    <div class="row g-3 mb-4">
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(230,126,34,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#e67e22;">60</span>
+            <div><code class="fw-bold" style="color:#e67e22;">.Attach()</code>
+            <p class="text-muted small mt-1 mb-2">Bağlam dışında oluşturulmuş bir ürün nesnesini context'e bağla ve takibe al.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(230,126,34,.12);color:#e67e22;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#e67e22;flex-shrink:0;"></span>Unchanged</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(230,126,34,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#e67e22;">61</span>
+            <div><code class="fw-bold" style="color:#e67e22;">.AttachRange()</code>
+            <p class="text-muted small mt-1 mb-2">Birden fazla müşteri nesnesini aynı anda context'e ekleyip takibe al.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(230,126,34,.12);color:#e67e22;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#e67e22;flex-shrink:0;"></span>2x Unchanged</span>
+            </div></div></div></div>
+
+        <div class="col-lg-2 col-md-4 col-6"><div class="card p-3 h-100 rounded-2" style="border:1px solid rgba(230,126,34,.25);"><div class="d-flex align-items-start gap-3">
+            <span class="badge rounded-2 fs-6 px-2 py-1 mt-1 text-white" style="background:#e67e22;">62</span>
+            <div><code class="fw-bold" style="color:#e67e22;">.Entry()</code>
+            <p class="text-muted small mt-1 mb-2">Bir ürünü bul, Entry ile durumunu (EntityState) oku ve konsola yazdır.</p>
+            <span class="d-inline-flex align-items-center gap-1 rounded-1 px-2 py-1 fw-semibold" style="background:rgba(230,126,34,.12);color:#e67e22;font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:#e67e22;flex-shrink:0;"></span>Modified</span>
+            </div></div></div></div>
+    </div>
+
+</div>
+</main>
