@@ -111,57 +111,47 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             //ODEV 24 - EndsWith
             ViewBag.customersEndsWithI = _context.Customers.Select(x => x.CustomeCity.EndsWith("i")).Count();
 
+            // ODEV 25 - AsQueryable
+            var query = _context.Products.AsQueryable();
+            query = query.Where(x => x.IsActive);
+            ViewBag.queryableProducts = query.Count();
 
+            // ODEV 26 - AsNoTracking
+            ViewBag.noTrackingCategories = _context.Categories.AsNoTracking().Count();
+
+            // ODEV 27 - DefaultIfEmpty
+            ViewBag.defaultIfEmptyResult = _context.Products.Where(x=>x.ProductPrice > 99999).Select(x=>x.ProductName).DefaultIfEmpty("Sonuç Yok").FirstOrDefault();
+
+            // ODEV 28 - OrderBy
+            ViewBag.productsByPriceAsc = _context.Products.OrderBy(x => x.ProductPrice).Select(x=>x.ProductName).First();
+
+            // ODEV 29 - OrderByDescending
+            ViewBag.customersByBalanceDesc = _context.Customers.OrderByDescending(x => x.CustomeBalance).Select(x => x.CustomeName).First();
+
+            // ODEV 30 - Take
+            ViewBag.top5Products = _context.Products.OrderByDescending(x=>x.ProductPrice).Take(5).Select(x=>x.ProductName).First();
+
+            // ODEV 31 - Skip
+            ViewBag.skippedOrders = _context.Orders.OrderBy(x=>x.Id).Skip(10).Count();
+
+            // ODEV 32 - TakeLast
+            ViewBag.lastThreeProducts = _context.Products.OrderBy(X => X.Id).TakeLast(1).Select(x=>x.ProductName);
+
+            // ODEV 33 - SkipLast
+            ViewBag.skipLastProducts = _context.Orders.OrderBy(x => x.Id).SkipLast(5).Select(x=>x.Id).Last();
+
+            // ODEV 34 - Reverse
+            ViewBag.reversedProducts = _context.Products.OrderBy(x => x.Id).Reverse().Select(x=>x.ProductName).First();
+
+            // ODEV 35 - Chunk
+            var allOrder = _context.Orders.ToList();
+            ViewBag.chunkedOrders = allOrder.Chunk(10).FirstOrDefault().Count();
+
+            // ODEV 36 - Index
+            var products = _context.Products.AsNoTracking().ToList();
             return View();
         }
-        // ODEV 25 - AsQueryable
-        // Urun sorgusunu IQueryable olarak baslat; kosullu aktiflik filtresi ekle.
-        // ViewBag.queryableProducts = ...   -> Count
 
-        // ODEV 26 - AsNoTracking
-        // Tum kategorileri degisiklik takibi olmadan (read-only) listele.
-        // ViewBag.noTrackingCategories = ...   -> Count
-
-        // ODEV 27 - DefaultIfEmpty
-        // Fiyati 99.999 TL'nin uzerinde urun getir; bossa varsayilan dondur.
-        // ViewBag.defaultIfEmptyResult = ...   -> urun adi veya "Sonuc yok"
-
-
-        // ============================================================
-        //  GRUP 4 - Siralama / Sayfalama
-        // ============================================================
-
-        // ODEV 28 - OrderBy
-        // Urunleri fiyatina gore kucukten buyuge sirala.
-        // ViewBag.productsByPriceAsc = ...   -> "En ucuz: X"
-
-        // ODEV 29 - OrderByDescending
-        // Musterileri bakiyelerine gore buyukten kucuge sirala.
-        // ViewBag.customersByBalanceDesc = ...   -> en yuksek bakiyeli musteri adi
-
-        // ODEV 30 - Take
-        // En pahali 5 urunu fiyata gore azalan sirada listele.
-        // ViewBag.top5Products = ...   -> Count veya urun adlari
-
-        // ODEV 31 - Skip
-        // Ilk 10 siparisi atla, kalan siparisleri listele.
-        // ViewBag.skippedOrders = ...   -> Count
-
-        // ODEV 32 - TakeLast
-        // En son eklenen 3 urunu getir.
-        // ViewBag.lastThreeProducts = ...   -> Count veya urun adlari
-
-        // ODEV 33 - SkipLast
-        // Listeyi Id'ye gore sirala; son 5 kaydi atlayarak geri kalanini dondur.
-        // ViewBag.skipLastProducts = ...   -> Count
-
-        // ODEV 34 - Reverse
-        // Urunleri Id'ye gore sirala, sonra listeyi tamamen ters cevir.
-        // ViewBag.reversedProducts = ...   -> Count
-
-        // ODEV 35 - Chunk
-        // Tum siparisleri 10'arli sayfalara bol ve ilk sayfayi goruntule.
-        // ViewBag.chunkedOrders = ...   -> chunk sayisi veya ilk sayfa Count
 
         // ODEV 36 - Index
         // Tum urunleri index numarasiyla birlikte listele (0'dan baslayan sira).
