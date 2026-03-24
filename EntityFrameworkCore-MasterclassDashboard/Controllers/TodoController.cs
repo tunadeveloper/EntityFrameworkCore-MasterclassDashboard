@@ -19,6 +19,10 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.highPriorityTask = _context.Todos.Where(x => x.Priority == "Yüksek" && x.IsCompleted == false).ToList();
             ViewBag.medPriorityTask = _context.Todos.Where(x => x.Priority == "Orta" && x.IsCompleted == false).ToList();
             ViewBag.lowPriorityTask = _context.Todos.Where(x => x.Priority == "Düşük" && x.IsCompleted == false).ToList();
+
+            var nearestDate = _context.Todos.OrderBy(x => x.DueDate).Select(x => x.DueDate).FirstOrDefault();
+            ViewBag.upcomingTask = nearestDate.ToString("dd MMMM yyyy, HH:mm");
+            ViewBag.upcomingTaskIso = nearestDate.ToString("yyyy-MM-ddTHH:mm:ss");
             return View();
         }
 

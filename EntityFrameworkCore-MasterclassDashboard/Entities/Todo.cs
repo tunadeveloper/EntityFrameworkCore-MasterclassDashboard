@@ -8,7 +8,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Entities
         public string? Description { get; set; }
         public bool IsCompleted { get; set; } = false;
         public string Priority { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         public string? Category { get; set; }
     }
 }

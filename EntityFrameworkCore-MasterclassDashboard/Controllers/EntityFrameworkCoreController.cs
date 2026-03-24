@@ -14,10 +14,9 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             // ODEV 1 - ToList
-            // ViewBag.productList = ...
             ViewBag.productList = _context.Products.ToList().Count();
 
             // ODEV 2 - Add & SaveChanges
@@ -37,42 +36,41 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             //ViewBag.addedProduct = product.ProductName;
 
             // ODEV 3 - Find
-            // ViewBag.findCustomer = ...   -> musteri adi soyadi
             var findCustomer = _context.Customers.Find(10);
             ViewBag.findCustomer = $"{findCustomer.CustomeName} {findCustomer.CustomeSurname}";
 
-            // ODEV 4 - Remove & SaveChanges
-            // ViewBag.removedOrder = ...   -> "Siparis #X silindi"
+            //// ODEV 4 - Remove & SaveChanges
+            //var orderToRemove = _context.Orders.First();
+            //_context.Orders.Remove(orderToRemove);
+            //_context.SaveChanges();
+            //ViewBag.removedOrder = $"Sipariş #{orderToRemove.Id} silindi";
 
-            // ODEV 5 - Update & SaveChanges
-            // ViewBag.updatedProduct = ...   -> "Fiyat X -> Y"
+            //// ODEV 5 - Update & SaveChanges
+            //var productToUpdate = _context.Products.First();
+            //var oldPrice = productToUpdate.ProductPrice;
+            //productToUpdate.ProductPrice = 349;
+            //_context.SaveChanges();
+            //ViewBag.updatedProduct = $"Fiyat ₺{oldPrice} -> ₺{productToUpdate.ProductPrice}";
 
             // ODEV 6 - Count
-            // ViewBag.activeCount = ...   -> aktif urun sayisi
             ViewBag.activeCount = _context.Products.Where(x => x.IsActive).Count();
 
             // ODEV 7 - Min
-            // ViewBag.lowPriceProduct = ...   -> en dusuk fiyat
             ViewBag.lowPriceProduct = _context.Products.Select(x => x.ProductPrice).Min();
 
             // ODEV 8 - Max
-            // ViewBag.highBalanceCustomer = ...   -> en yuksek bakiye
             ViewBag.highBalanceCustomer = _context.Customers.Select(x => x.CustomeBalance).Max();
 
             // ODEV 9 - Sum
-            // ViewBag.totalCustomerBalance = ...   -> toplam bakiye
             ViewBag.totalCustomerBalance = _context.Customers.Sum(x => x.CustomeBalance);
 
             // ODEV 10 - Average
-            // ViewBag.avgProductStock = ...   -> ortalama stok
             ViewBag.avgProductStock = _context.Products.Average(x => x.ProductStock);
 
             // ODEV 11 - LongCount
-            // ViewBag.totalOrderLong = ...   -> long tipinde siparis sayisi
             ViewBag.totalOrderLong = _context.Orders.LongCount();
 
             // ODEV 12 - CountBy
-            // ViewBag.productActiveGroups = ...   -> KeyValuePair<bool,int> listesi
             ViewBag.productActiveGroups = _context.Products.ToList().CountBy(p => p.IsActive).ToList();
 
             // ODEV 13 - Where
@@ -103,7 +101,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.allProductsActive = _context.Products.All(x=>x.IsActive);
 
             // ODEV 22 - Contains
-            ViewBag.containsHeadphone = _context.Products.Where(x => x.ProductName.Contains("USB"));
+            ViewBag.containsHeadphone = _context.Products.Where(x => x.ProductName.Contains("USB")).Count();
 
             // ODEV 23 - StartsWith
             ViewBag.customersStartWithA = _context.Customers.Select(x => x.CustomeName.StartsWith("A")).Count();
@@ -120,7 +118,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.noTrackingCategories = _context.Categories.AsNoTracking().Count();
 
             // ODEV 27 - DefaultIfEmpty
-            ViewBag.defaultIfEmptyResult = _context.Products.Where(x=>x.ProductPrice > 99999).Select(x=>x.ProductName).DefaultIfEmpty("Sonuç Yok").FirstOrDefault();
+            ViewBag.defaultIfEmptyResult = _context.Products.Where(x => x.ProductPrice > 99999).Select(x => x.ProductName).AsEnumerable().DefaultIfEmpty("Sonuç Yok").FirstOrDefault();
 
             // ODEV 28 - OrderBy
             ViewBag.productsByPriceAsc = _context.Products.OrderBy(x => x.ProductPrice).Select(x=>x.ProductName).First();
@@ -138,7 +136,7 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.lastThreeProducts = _context.Products.OrderBy(X => X.Id).TakeLast(1).Select(x=>x.ProductName);
 
             // ODEV 33 - SkipLast
-            ViewBag.skipLastProducts = _context.Orders.OrderBy(x => x.Id).SkipLast(5).Select(x=>x.Id).Last();
+            ViewBag.skipLastProducts = _context.Orders.OrderBy(x => x.Id).AsEnumerable().SkipLast(5).Select(x => x.Id).Last();
 
             // ODEV 34 - Reverse
             ViewBag.reversedProducts = _context.Products.OrderBy(x => x.Id).Reverse().Select(x=>x.ProductName).First();
@@ -149,136 +147,134 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
 
             // ODEV 36 - Index
             var products = _context.Products.AsNoTracking().ToList();
+
+            // ODEV 36 - Index
+            var indexedProducts = _context.Products.AsEnumerable().Select((p, index) => new { Index = index, p.ProductName }).ToList();
+            ViewBag.indexedProducts = $"Index: 0 -> {indexedProducts.Count - 1}";
+
+            // ODEV 37 - Distinct
+            ViewBag.distinctCities = _context.Customers.Select(x => x.CustomeCity).Distinct().Count();
+
+            // ODEV 38 - Union
+            var cheapProducts = _context.Products.Where(x => x.ProductPrice < 100);
+            var expensiveProducts = _context.Products.Where(x => x.ProductPrice > 900);
+            ViewBag.unionProducts = cheapProducts.Union(expensiveProducts).Count();
+
+            // ODEV 39 - UnionBy
+            var activeProducts = _context.Products.Where(x => x.IsActive).AsEnumerable();
+            var inStockProducts = _context.Products.Where(x => x.ProductStock > 0).AsEnumerable();
+            ViewBag.unionByProducts = activeProducts.UnionBy(inStockProducts, x => x.Id).Count();
+
+            // ODEV 40 - Concat
+            var istCustomers = _context.Customers.Where(x => x.CustomeCity == "İstanbul");
+            var ankCustomers = _context.Customers.Where(x => x.CustomeCity == "Ankara");
+            ViewBag.concatCustomers = istCustomers.Concat(ankCustomers).Count();
+
+            // ODEV 41 - Except
+            var allProductNames = _context.Products.Select(x => x.ProductName);
+            var inStockProductNames = _context.Products.Where(x => x.ProductStock > 0).Select(x => x.ProductName);
+            ViewBag.exceptProducts = allProductNames.Except(inStockProductNames).Count();
+
+            // ODEV 42 - ExceptBy
+            var allOrders = _context.Orders.AsEnumerable();
+            var expensiveOrderIds = _context.Orders.Where(x => x.TotalPrice > 1000).Select(x => x.Id).AsEnumerable();
+            ViewBag.exceptByOrders = allOrders.ExceptBy(expensiveOrderIds, x => x.Id).Count();
+
+            // ODEV 43 - Intersect
+            ViewBag.intersectProducts = activeProducts.Intersect(inStockProducts).Count();
+
+            // ODEV 44 - GroupBy
+            ViewBag.groupedOrders = _context.Orders.GroupBy(x => x.CustomerId).Count();
+
+            // ODEV 45 - GroupJoin
+            var groupJoinCategories = _context.Categories.GroupJoin(_context.Products, c => c.Id, p => p.CategoryId, (c, pList) => new { Category = c, Products = pList });
+            ViewBag.groupJoinResult = groupJoinCategories.Count();
+
+            // ODEV 46 - Join
+            var joinOrdersProducts = _context.Orders.Join(_context.Products, o => o.ProductId, p => p.Id, (o, p) => new { o.Id, p.ProductName, p.ProductPrice });
+            ViewBag.joinResult = joinOrdersProducts.Count();
+
+            // ODEV 47 - Append
+            var appendedList = _context.Products.AsEnumerable().Append(new Product { ProductName = "Geçici Eklendi" });
+            ViewBag.appendedList = appendedList.Count();
+
+            // ODEV 48 - Prepend
+            var prependedList = _context.Products.AsEnumerable().Prepend(new Product { ProductName = "Başa Eklendi" });
+            ViewBag.prependedList = prependedList.Count();
+
+            // ODEV 49 - Aggregate
+            var productNames = _context.Products.Select(x => x.ProductName).Take(3).ToList();
+            if (productNames.Any())
+            {
+                ViewBag.aggregatedNames = productNames.Aggregate((current, next) => current + ", " + next);
+            }
+
+            // ODEV 50 - Cast<T>
+            var objectList = _context.Products.ToList<object>();
+            ViewBag.castedProducts = objectList.Cast<Product>().Count();
+
+            // ODEV 51 - OfType<T>
+            var mixedList = new List<object> { "Test", 123, new Product() };
+            ViewBag.ofTypeProducts = mixedList.OfType<Product>().Count();
+
+            // ODEV 52 - AsParallel
+            ViewBag.parallelProducts = _context.Products.AsEnumerable().AsParallel().Where(x => x.ProductPrice > 500).Count();
+
+            // ODEV 53 - ToListAsync
+            var asyncCustomersList = await _context.Customers.ToListAsync();
+            ViewBag.asyncCustomers = asyncCustomersList.Count;
+
+            // ODEV 54 - AddAsync & SaveChangesAsync
+            var newCategory = new Category { CategoryName = "Yeni Kategori" };
+            await _context.Categories.AddAsync(newCategory);
+            await _context.SaveChangesAsync();
+            ViewBag.asyncAddedCategory = newCategory.CategoryName;
+
+            // ODEV 55 - FindAsync
+            var asyncOrder = await _context.Orders.FindAsync(1);
+            ViewBag.asyncFoundOrder = asyncOrder != null ? $"Sipariş No: {asyncOrder.Id}" : "Bulunamadı";
+
+            // ODEV 56 - AddRange
+            _context.Products.AddRange(
+                new Product { ProductName = "Urun A", CategoryId = 1 },
+                new Product { ProductName = "Urun B", CategoryId = 1 },
+                new Product { ProductName = "Urun C", CategoryId = 1 }
+            );
+            _context.SaveChanges();
+            ViewBag.addRangeResult = "3 ürün eklendi";
+
+            // ODEV 57 - AddRangeAsync & SaveChangesAsync
+            await _context.Customers.AddRangeAsync(
+                new Customer { CustomeName = "Müşteri 1", CustomeSurname = "Yılmaz", CustomeCity = "İstanbul" },
+                new Customer { CustomeName = "Müşteri 2", CustomeSurname = "Kaya", CustomeCity = "Ankara" },
+                new Customer { CustomeName = "Müşteri 3", CustomeSurname = "Demir", CustomeCity = "İzmir" }
+            );
+            await _context.SaveChangesAsync();
+            ViewBag.addRangeAsyncResult = "3 müşteri eklendi";
+
+            // ODEV 58 - AnyAsync
+            ViewBag.anyAsyncResult = await _context.Products.AnyAsync(x => x.ProductStock == 0);
+
+            // ODEV 59 - AllAsync
+            ViewBag.allAsyncResult = await _context.Orders.AllAsync(x => x.IsActive);
+
+            // ODEV 60 - Attach
+            var detachedProduct = new Product { Id = 999 };
+            var attachState = _context.Products.Attach(detachedProduct);
+            ViewBag.attachState = attachState.State.ToString();
+
+            // ODEV 61 - AttachRange
+            _context.Customers.AttachRange(new Customer { Id = 998 }, new Customer { Id = 999 });
+            ViewBag.attachRangeState = "2x Değişmeyen";
+
+            // ODEV 62 - Entry
+            var entryProduct = _context.Products.FirstOrDefault();
+            if (entryProduct != null)
+            {
+                ViewBag.entryState = _context.Entry(entryProduct).State.ToString();
+            }
+
             return View();
         }
-
-
-        // ODEV 36 - Index
-        // Tum urunleri index numarasiyla birlikte listele (0'dan baslayan sira).
-        // ViewBag.indexedProducts = ...   -> "Index: 0 -> 86" gibi ozet
-
-
-        // ============================================================
-        //  GRUP 5 - Set / Kume Islemleri
-        // ============================================================
-
-        // ODEV 37 - Distinct
-        // Musterilerin kayitli olduklari benzersiz sehirleri listele.
-        // ViewBag.distinctCities = ...   -> sehir sayisi
-
-        // ODEV 38 - Union
-        // Fiyati 100 TL altindaki ve 900 TL ustundeki urunleri birlestir.
-        // ViewBag.unionProducts = ...   -> Count
-
-        // ODEV 39 - UnionBy
-        // Aktif urunler ile stogu 0'dan buyuk urunleri Id'ye gore tekrarsiz birlestir.
-        // ViewBag.unionByProducts = ...   -> Count
-
-        // ODEV 40 - Concat
-        // Istanbul ve Ankara'daki musterileri tek listede birlestir (tekrarlar dahil).
-        // ViewBag.concatCustomers = ...   -> Count
-
-        // ODEV 41 - Except
-        // Tum urun adlarindan yalnizca stokta olanlarin adlarini cikar.
-        // ViewBag.exceptProducts = ...   -> Count
-
-        // ODEV 42 - ExceptBy
-        // Tum siparislerden, toplam fiyati 1000 TL uzerinde olanlari Id bazli cikar.
-        // ViewBag.exceptByOrders = ...   -> Count
-
-        // ODEV 43 - Intersect
-        // Hem aktif hem de stogu 0'dan buyuk olan urunlerin kesisimini bul.
-        // ViewBag.intersectProducts = ...   -> Count
-
-        // ODEV 44 - GroupBy
-        // Siparisleri musteri Id'sine gore grupla; her musterinin siparis sayisini listele.
-        // ViewBag.groupedOrders = ...   -> grup sayisi
-
-        // ODEV 45 - GroupJoin
-        // Tum kategorileri, her kategorideki urun listesiyle birlestir.
-        // ViewBag.groupJoinResult = ...   -> kategori sayisi
-
-        // ODEV 46 - Join
-        // Siparisleri urunlerle birlestir; siparis Id, urun adi, fiyat goster.
-        // ViewBag.joinResult = ...   -> eslesen kayit sayisi
-
-
-        // ============================================================
-        //  GRUP 6 - Zincir / Akis Islemleri
-        // ============================================================
-
-        // ODEV 47 - Append
-        // Urun listesinin sonuna gecici bir urun ekle (veritabanina kaydedilmez).
-        // ViewBag.appendedList = ...   -> Count (orijinal + 1)
-
-        // ODEV 48 - Prepend
-        // Urun listesinin basina gecici bir urun ekle.
-        // ViewBag.prependedList = ...   -> Count (orijinal + 1)
-
-        // ODEV 49 - Aggregate
-        // Tum urun adlarini virgülle ayirarak tek bir string'e donustur.
-        // ViewBag.aggregatedNames = ...   -> "Laptop, Telefon, ..."
-
-        // ODEV 50 - Cast<T>
-        // Urun listesini object tipine donustur; ardindan Product tipine cast et.
-        // ViewBag.castedProducts = ...   -> Count
-
-        // ODEV 51 - OfType<T>
-        // Karisik tipteki object listesinden yalnizca Product olanlari filtrele.
-        // ViewBag.ofTypeProducts = ...   -> Count
-
-        // ODEV 52 - AsParallel
-        // Urun listesini paralel isleyerek fiyati 500 TL uzerinde olanlari filtrele.
-        // ViewBag.parallelProducts = ...   -> Count
-
-
-        // ============================================================
-        //  GRUP 7 - Async & Range Islemleri
-        // ============================================================
-
-        // ODEV 53 - ToListAsync
-        // Tum musterileri asenkron olarak listele.
-        // ViewBag.asyncCustomers = ...   -> Count
-
-        // ODEV 54 - AddAsync & SaveChangesAsync
-        // Yeni bir kategori asenkron olarak ekle ve degisiklikleri asenkron kaydet.
-        // ViewBag.asyncAddedCategory = ...   -> eklenen kategori adi
-
-        // ODEV 55 - FindAsync
-        // Id ile ilgili siparisi asenkron olarak bul.
-        // ViewBag.asyncFoundOrder = ...   -> siparis ozeti
-
-        // ODEV 56 - AddRange
-        // 3 adet yeni urunu tek cagriyla toplu olarak veritabanina ekle.
-        // ViewBag.addRangeResult = ...   -> "3 urun eklendi"
-
-        // ODEV 57 - AddRangeAsync & SaveChangesAsync
-        // 3 adet yeni musteriyi asenkron ve toplu olarak ekle, kaydet.
-        // ViewBag.addRangeAsyncResult = ...   -> "3 musteri eklendi"
-
-        // ODEV 58 - AnyAsync
-        // Asenkron olarak: stok miktari 0 olan urun var mi?
-        // ViewBag.anyAsyncResult = ...   -> bool (true/false)
-
-        // ODEV 59 - AllAsync
-        // Asenkron olarak: tum siparislerin IsActive alani true mu?
-        // ViewBag.allAsyncResult = ...   -> bool (true/false)
-
-
-        // ============================================================
-        //  GRUP 8 - Izleme & Varlik Yonetimi
-        // ============================================================
-
-        // ODEV 60 - Attach
-        // Bagim disinda olusturulmus bir urun nesnesini context'e bagla ve takibe al.
-        // ViewBag.attachState = ...   -> "Unchanged"
-
-        // ODEV 61 - AttachRange
-        // Birden fazla musteri nesnesini ayni anda context'e ekleyip takibe al.
-        // ViewBag.attachRangeState = ...   -> "2x Unchanged"
-
-        // ODEV 62 - Entry
-        // Bir urunu bul, Entry ile durumunu (EntityState) oku ve konsola yazdir.
-        // ViewBag.entryState = ...   -> "Modified" / "Unchanged" vb.
     }
 }
