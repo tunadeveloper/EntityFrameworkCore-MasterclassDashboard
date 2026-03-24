@@ -20,37 +20,36 @@ namespace EntityFrameworkCore_MasterclassDashboard.Controllers
             ViewBag.productList = _context.Products.ToList().Count();
 
             // ODEV 2 - Add & SaveChanges
-            // ViewBag.addedProduct = ...   -> eklenen urun adi
-            //var product = new Product
-            //{
-            //    ProductName = "24 inc Monitor",
-            //    ProductPrice = 50,
-            //    ProductStock = 70,
-            //    CreatedDate = DateTime.Now,
-            //    UpdatedDate = null,
-            //    IsActive = true,
-            //    CategoryId = 2
-            //};
-            //_context.Products.Add(product);
-            //_context.SaveChanges();
-            //ViewBag.addedProduct = product.ProductName;
+           var product = new Product
+           {
+               ProductName = "24 inc Monitor",
+               ProductPrice = 50,
+               ProductStock = 70,
+               CreatedDate = DateTime.Now,
+               UpdatedDate = null,
+               IsActive = true,
+               CategoryId = 2
+           };
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            ViewBag.addedProduct = product.ProductName;
 
             // ODEV 3 - Find
             var findCustomer = _context.Customers.Find(10);
             ViewBag.findCustomer = $"{findCustomer.CustomeName} {findCustomer.CustomeSurname}";
 
-            //// ODEV 4 - Remove & SaveChanges
-            //var orderToRemove = _context.Orders.First();
-            //_context.Orders.Remove(orderToRemove);
-            //_context.SaveChanges();
-            //ViewBag.removedOrder = $"Sipariş #{orderToRemove.Id} silindi";
+            // ODEV 4 - Remove & SaveChanges
+            var orderToRemove = _context.Orders.First();
+            _context.Orders.Remove(orderToRemove);
+            _context.SaveChanges();
+            ViewBag.removedOrder = $"Sipariş #{orderToRemove.Id} silindi";
 
-            //// ODEV 5 - Update & SaveChanges
-            //var productToUpdate = _context.Products.First();
-            //var oldPrice = productToUpdate.ProductPrice;
-            //productToUpdate.ProductPrice = 349;
-            //_context.SaveChanges();
-            //ViewBag.updatedProduct = $"Fiyat ₺{oldPrice} -> ₺{productToUpdate.ProductPrice}";
+            // ODEV 5 - Update & SaveChanges
+            var productToUpdate = _context.Products.First();
+            var oldPrice = productToUpdate.ProductPrice;
+            productToUpdate.ProductPrice = 349;
+            _context.SaveChanges();
+            ViewBag.updatedProduct = $"Fiyat ₺{oldPrice} -> ₺{productToUpdate.ProductPrice}";
 
             // ODEV 6 - Count
             ViewBag.activeCount = _context.Products.Where(x => x.IsActive).Count();
